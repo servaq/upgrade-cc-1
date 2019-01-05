@@ -3,7 +3,6 @@ package io.campsite.db.dao;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.lang.Nullable;
 
 public interface BaseDao<T> {
 

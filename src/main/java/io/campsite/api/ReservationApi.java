@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import io.campsite.api.error.ValidationException;
+import io.campsite.api.model.ApiErrorDto;
 import io.campsite.api.model.ReservationDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,47 +22,47 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-01-04T15:28:04.296Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-01-04T21:32:25.955Z")
 
 @Api(value = "reservation")
 public interface ReservationApi {
 
-	@ApiOperation(value = "Creates a reservation", nickname = "createReservation", notes = "Creates a reservation for the given date range.", tags = {
+	@ApiOperation(value = "Creates a reservation", nickname = "createReservation", notes = "Creates a reservation for the given date range.", response = ReservationDto.class, tags = {
 			"reservation", })
-	@ApiResponses(value = { @ApiResponse(code = 201, message = "Successful operation"),
-			@ApiResponse(code = 400, message = "Invalid reservation data") })
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Successful operation", response = ReservationDto.class),
+			@ApiResponse(code = 400, message = "Invalid reservation data", response = ApiErrorDto.class) })
 	@RequestMapping(value = "/reservation", produces = { "application/json" }, consumes = {
 			"application/json" }, method = RequestMethod.POST)
-	ResponseEntity<Object> createReservation(
+	ResponseEntity<ReservationDto> createReservation(
 			@ApiParam(value = "Reservation details", required = true) @Valid @RequestBody ReservationDto body)
 			throws ValidationException;
 
 	@ApiOperation(value = "Cancels a reservation", nickname = "deleteReservation", notes = "Cancels a reservation with the given ID", tags = {
 			"reservation", })
 	@ApiResponses(value = { @ApiResponse(code = 204, message = "Successful operation"),
-			@ApiResponse(code = 404, message = "Invalid reservation ID") })
+			@ApiResponse(code = 404, message = "Invalid reservation ID", response = ApiErrorDto.class) })
 	@RequestMapping(value = "/reservation/{reservationId}", produces = {
 			"application/json" }, method = RequestMethod.DELETE)
 	ResponseEntity<Void> deleteReservation(
 			@ApiParam(value = "ID of reservation that needs to be deleted", required = true) @PathVariable("reservationId") Long reservationId);
 
-	@ApiOperation(value = "Get reservation details", nickname = "getReservation", notes = "Get reservation details for the given reservation ID.", tags = {
+	@ApiOperation(value = "Get reservation details", nickname = "getReservation", notes = "Get reservation details for the given reservation ID.", response = ReservationDto.class, tags = {
 			"reservation", })
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful operation"),
-			@ApiResponse(code = 404, message = "Invalid reservation ID") })
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful operation", response = ReservationDto.class),
+			@ApiResponse(code = 404, message = "Invalid reservation ID", response = ApiErrorDto.class) })
 	@RequestMapping(value = "/reservation/{reservationId}", produces = { "application/json" }, consumes = {
 			"application/json" }, method = RequestMethod.GET)
-	ResponseEntity<Void> getReservation(
+	ResponseEntity<ReservationDto> getReservation(
 			@ApiParam(value = "ID of reservation requested", required = true) @PathVariable("reservationId") Long reservationId);
 
-	@ApiOperation(value = "Updates a reservation", nickname = "putReservation", notes = "Updates the reservation with the given data.", tags = {
+	@ApiOperation(value = "Updates a reservation", nickname = "putReservation", notes = "Updates the reservation with the given data.", response = ReservationDto.class, tags = {
 			"reservation", })
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful operation"),
-			@ApiResponse(code = 400, message = "Invalid reservation data"),
-			@ApiResponse(code = 404, message = "Invalid reservation ID") })
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful operation", response = ReservationDto.class),
+			@ApiResponse(code = 400, message = "Invalid reservation data", response = ApiErrorDto.class),
+			@ApiResponse(code = 404, message = "Invalid reservation ID", response = ApiErrorDto.class) })
 	@RequestMapping(value = "/reservation/{reservationId}", produces = { "application/json" }, consumes = {
 			"application/json" }, method = RequestMethod.PUT)
-	ResponseEntity<Void> putReservation(
+	ResponseEntity<ReservationDto> putReservation(
 			@ApiParam(value = "ID of reservation that needs to be updated", required = true) @PathVariable("reservationId") Long reservationId,
 			@ApiParam(value = "Reservation details", required = true) @Valid @RequestBody ReservationDto body);
 

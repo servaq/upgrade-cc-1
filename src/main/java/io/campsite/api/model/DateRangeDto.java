@@ -1,5 +1,6 @@
 package io.campsite.api.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import org.springframework.validation.annotation.Validated;
@@ -12,9 +13,11 @@ import io.swagger.annotations.ApiModelProperty;
  * DateRange
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-01-04T15:28:04.296Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-01-04T21:32:25.955Z")
 
-public class DateRangeDto {
+public class DateRangeDto implements Serializable {
+
+	private static final long serialVersionUID = -2839221652993009177L;
 
 	@JsonProperty("sinceDate")
 	private String sinceDate = null;

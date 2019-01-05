@@ -8,10 +8,11 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,9 +20,9 @@ import io.campsite.api.AvailabilityApi;
 import io.campsite.api.model.DateRangeDto;
 import io.swagger.annotations.ApiParam;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-01-04T15:28:04.296Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-01-04T21:32:25.955Z")
 
-@Controller
+@RestController
 public class AvailabilityApiController implements AvailabilityApi {
 
 	private static final Logger log = LoggerFactory.getLogger(AvailabilityApiController.class);
@@ -30,7 +31,7 @@ public class AvailabilityApiController implements AvailabilityApi {
 
 	private final HttpServletRequest request;
 
-	@org.springframework.beans.factory.annotation.Autowired
+	@Autowired
 	public AvailabilityApiController(ObjectMapper objectMapper, HttpServletRequest request) {
 		this.objectMapper = objectMapper;
 		this.request = request;
