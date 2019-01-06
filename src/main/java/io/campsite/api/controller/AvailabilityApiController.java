@@ -15,21 +15,22 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.campsite.api.AvailabilityApi;
 import io.campsite.api.error.ApiValidationException;
 import io.campsite.api.helper.ValidationHelper;
+import io.campsite.api.model.AvailableDatesDto;
 import io.campsite.api.model.DateRangeDto;
 import io.campsite.db.dao.ReservationDao;
 import io.swagger.annotations.ApiParam;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-01-04T21:32:25.955Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-01-06T19:03:16.515Z")
 
-@RestController
+@Controller
 public class AvailabilityApiController implements AvailabilityApi {
 
 	private static final Logger log = LoggerFactory.getLogger(AvailabilityApiController.class);
@@ -91,7 +92,7 @@ public class AvailabilityApiController implements AvailabilityApi {
 		return reservationDao.findAllDistinct("dates", query, String.class);
 	}
 
-	public ResponseEntity<List<String>> getAvailability(
+	public ResponseEntity<AvailableDatesDto> getAvailability(
 			@ApiParam(value = "Date range to get availability") @Valid @RequestBody DateRangeDto body)
 			throws ApiValidationException {
 		ArrayList<String> result = new ArrayList<>();
@@ -108,7 +109,9 @@ public class AvailabilityApiController implements AvailabilityApi {
 				date = date.plusDays(1);
 			}
 		}
-		return new ResponseEntity<List<String>>(result, HttpStatus.OK);
+		AvailableDatesDto availableDatesDto = new AvailableDatesDto();
+		availableDatesDto.setItems(result);
+		return new ResponseEntity<AvailableDatesDto>(availableDatesDto, HttpStatus.OK);
 	}
 
 }
