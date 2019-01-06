@@ -45,30 +45,35 @@ public class ReservationApiControllerTests {
 	}
 
 	@Test
-	public void test() throws Exception {
-		getReservationNotFound();
-		deleteReservationNotFound();
-		String reservationId = createReservation();
-		updateReservation(reservationId);
-		deleteReservationOk(reservationId);
-	}
-
-	private void getReservationNotFound() throws Exception {
+	public void getReservationNotFound() throws Exception {
 		this.mockMvc.perform(get("/reservation/inexistentId").contentType(MediaType.APPLICATION_JSON)).andDo(print())
 				.andExpect(status().isNotFound()).andExpect(jsonPath("$.message").value("reservation not found"));
 	}
 
-	private void deleteReservationNotFound() throws Exception {
+	@Test
+	public void deleteReservationNotFound() throws Exception {
 		this.mockMvc.perform(delete("/reservation/inexistentId").contentType(MediaType.APPLICATION_JSON)).andDo(print())
 				.andExpect(status().isNotFound()).andExpect(jsonPath("$.message").value("reservation not found"));
 	}
 
-	private void deleteReservationOk(String reservationId) throws Exception {
+	@Test
+	public void deleteReservationOk() throws Exception {
+		JSONObject json = new JSONObject();
+		json.put("fullname", "Unit test");
+		json.put("email", "unit@test");
+		json.put("sinceDate", LocalDate.now().plusDays(2).format(dateFormatter));
+		json.put("untilDate", LocalDate.now().plusDays(4).format(dateFormatter));
+		MvcResult result = this.mockMvc
+				.perform(post("/reservation").contentType(MediaType.APPLICATION_JSON).content(json.toString()))
+				.andDo(print()).andExpect(status().isCreated()).andReturn();
+		JSONObject jsonResult = new JSONObject(result.getResponse().getContentAsString());
+		String reservationId = jsonResult.getString("id");
 		this.mockMvc.perform(delete("/reservation/" + reservationId).contentType(MediaType.APPLICATION_JSON))
 				.andDo(print()).andExpect(status().isNoContent());
 	}
 
-	private String createReservation() throws Exception {
+	@Test
+	public void createReservation() throws Exception {
 		JSONObject json = new JSONObject();
 		this.mockMvc.perform(post("/reservation").contentType(MediaType.APPLICATION_JSON).content(json.toString()))
 				.andDo(print()).andExpect(status().isBadRequest())
@@ -152,11 +157,21 @@ public class ReservationApiControllerTests {
 		assertEquals("request.email != response.email", jsonResult.get("email"), json.get("email"));
 		assertEquals("request.sinceDate != response.sinceDate", jsonResult.get("sinceDate"), json.get("sinceDate"));
 		assertEquals("request.untilDate != response.untilDate", jsonResult.get("untilDate"), json.get("untilDate"));
-		return reservationId;
 	}
 
-	private void updateReservation(String reservationId) throws Exception {
+	@Test
+	public void updateReservation() throws Exception {
 		JSONObject json = new JSONObject();
+		json.put("fullname", "Unit test");
+		json.put("email", "unit@test");
+		json.put("sinceDate", LocalDate.now().plusDays(2).format(dateFormatter));
+		json.put("untilDate", LocalDate.now().plusDays(4).format(dateFormatter));
+		MvcResult result = this.mockMvc
+				.perform(post("/reservation").contentType(MediaType.APPLICATION_JSON).content(json.toString()))
+				.andDo(print()).andExpect(status().isCreated()).andReturn();
+		JSONObject jsonResult = new JSONObject(result.getResponse().getContentAsString());
+		String reservationId = jsonResult.getString("id");
+		json = new JSONObject();
 		this.mockMvc
 				.perform(put("/reservation/" + reservationId).contentType(MediaType.APPLICATION_JSON)
 						.content(json.toString()))
@@ -250,11 +265,11 @@ public class ReservationApiControllerTests {
 				.andExpect(jsonPath("$.message").value("reservation must be maximun 1 month in advance"));
 		json.put("sinceDate", LocalDate.now().plusDays(1).format(dateFormatter));
 		json.put("untilDate", LocalDate.now().plusDays(2).format(dateFormatter));
-		MvcResult result = this.mockMvc.perform(
+		result = this.mockMvc.perform(
 				put("/reservation/" + reservationId).contentType(MediaType.APPLICATION_JSON).content(json.toString()))
 				.andDo(print()).andExpect(status().isOk()).andReturn();
 		// Validates requested reservation is equals to response reservation
-		JSONObject jsonResult = new JSONObject(result.getResponse().getContentAsString());
+		jsonResult = new JSONObject(result.getResponse().getContentAsString());
 		assertEquals("request.id != response.id", jsonResult.get("id"), reservationId);
 		assertEquals("request.fullname != response.fullname", jsonResult.get("fullname"), json.get("fullname"));
 		assertEquals("request.email != response.email", jsonResult.get("email"), json.get("email"));
