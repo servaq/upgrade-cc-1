@@ -1,6 +1,5 @@
 package io.campsite.api.model;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import org.springframework.validation.annotation.Validated;
@@ -13,14 +12,14 @@ import io.swagger.annotations.ApiModelProperty;
  * Reservation
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-01-04T21:32:25.955Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-01-05T03:01:39.117Z")
 
-public class ReservationDto implements Serializable {
+public class ReservationDto {
 
 	private static final long serialVersionUID = 5029921423594336334L;
 
 	@JsonProperty("id")
-	private Long id = null;
+	private String id = null;
 
 	@JsonProperty("sinceDate")
 	private String sinceDate = null;
@@ -34,7 +33,7 @@ public class ReservationDto implements Serializable {
 	@JsonProperty("email")
 	private String email = null;
 
-	public ReservationDto id(Long id) {
+	public ReservationDto id(String id) {
 		this.id = id;
 		return this;
 	}
@@ -46,11 +45,11 @@ public class ReservationDto implements Serializable {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -11,6 +11,8 @@ import org.springframework.data.mongodb.core.convert.QueryMapper;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.lang.Nullable;
 
+import com.mongodb.client.result.DeleteResult;
+
 public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 
 	private final MongoTemplate mongoTemplate;
@@ -34,6 +36,17 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	@Override
+	public boolean remove(T entity) {
+		DeleteResult result = mongoTemplate.remove(entity);
+		return result.getDeletedCount() > 0;
+	}
+
+	@Override
+	public T findById(String id) {
+		return mongoTemplate.findById(id, typeOfDocument);
+	}
+
+	@Override
 	public List<T> findAll() {
 		return mongoTemplate.findAll(typeOfDocument);
 	}
@@ -46,6 +59,11 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 		List<TResult> result = mongoTemplate.getCollection(getCollectionName())
 				.distinct(distinctField, mappedQuery, resultClass).into(new ArrayList<>());
 		return result;
+	}
+
+	@Override
+	public void dropCollection() {
+		mongoTemplate.dropCollection(typeOfDocument);
 	}
 
 }
