@@ -14,7 +14,7 @@ Here the API REST specification:
 
 ## Technology
 
-This server runs over:
+This server runs on:
 - Java 8
 - Maven 3
 - Spring Boot 2
