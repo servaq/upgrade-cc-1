@@ -40,8 +40,8 @@ public class ReservationApiControllerTests {
 	private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("YYYY-MM-dd");
 
 	@Before
-	public void dropCollection() {
-		reservationDao.dropCollection();
+	public void cleanCollection() {
+		reservationDao.cleanCollection();
 	}
 
 	@Test

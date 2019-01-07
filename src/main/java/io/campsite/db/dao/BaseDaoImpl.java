@@ -62,8 +62,15 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	@Override
-	public void dropCollection() {
-		mongoTemplate.dropCollection(typeOfDocument);
+	public void cleanCollection() {
+		mongoTemplate.remove(typeOfDocument).all();
+	}
+
+	@Override
+	public void createCollectionIfNotExists() {
+		if (!mongoTemplate.collectionExists(typeOfDocument)) {
+			mongoTemplate.createCollection(typeOfDocument);
+		}
 	}
 
 }

@@ -16,6 +16,8 @@ public interface BaseDao<T> {
 
 	<TResult> List<TResult> findAllDistinct(String distinctField, Query query, Class<TResult> resultClass);
 
-	void dropCollection();
+	void cleanCollection();
+
+	void createCollectionIfNotExists();
 
 }
