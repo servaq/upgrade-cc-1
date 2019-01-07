@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "1a97d7f4-d186-4794-ac5b-970c1e8eeacc",
+		"name": "Upgrade-CC-1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Reservation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fullname\": \"Test\",\n\t\"email\": \"mail@mail\",\n\t\"sinceDate\": \"2019-01-08\",\n\t\"untilDate\": \"2019-01-08\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/reservation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reservation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Reservation",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fullname\": \"Test 2\",\n\t\"email\": \"mail@mail2\",\n\t\"sinceDate\": \"2019-01-08\",\n\t\"untilDate\": \"2019-01-09\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/reservation/5c31899f24d90e06d4ed8e1c",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reservation",
+						"5c31899f24d90e06d4ed8e1c"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Reservation",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fullname\": \"Test\",\n\t\"email\": \"mail@mail\",\n\t\"sinceDate\": \"2019-01-08\",\n\t\"untilDate\": \"2019-01-08\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/reservation/5c30230924d90e05b0263f0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reservation",
+						"5c30230924d90e05b0263f0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Reservation",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fullname\": \"Test\",\n\t\"email\": \"mail@mail\",\n\t\"sinceDate\": \"2019-01-08\",\n\t\"untilDate\": \"2019-01-08\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/reservation/5c30230924d90e05b0263f022",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reservation",
+						"5c30230924d90e05b0263f022"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Availability",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sinceDate\": \"2019-01-06\",\n\t\"untilDate\": \"2019-01-10\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/availability",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"availability"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

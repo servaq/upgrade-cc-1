@@ -1,0 +1,282 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a backend coding challege for Upgrade. Topic: Campsite reservations. Author: Sergio Vaquero.",
+    "version": "1.0.0",
+    "title": "Upgrade - Backend coding challenge",
+    "contact": {
+      "email": "servaq@gmail.com"
+    }
+  },
+  "schemes": [
+    "https"
+  ],
+  "tags": [
+    {
+      "name": "reservation",
+      "description": "Campasite reservations"
+    }
+  ],
+  "paths": {
+    "/availability": {
+      "get": {
+        "tags": [
+          "reservation"
+        ],
+        "summary": "Finds Campsite availability",
+        "description": "Provides information of the availability of the campsite for a given date range with the default being 1 month.",
+        "operationId": "getAvailability",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Date range to get availability",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/DateRange"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/AvailableDates"
+            }
+          },
+          "400": {
+            "description": "Invalid date range values",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          }
+        }
+      }
+    },
+    "/reservation": {
+      "post": {
+        "tags": [
+          "reservation"
+        ],
+        "summary": "Creates a reservation",
+        "description": "Creates a reservation for the given date range.",
+        "operationId": "createReservation",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Reservation details",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          },
+          "400": {
+            "description": "Invalid reservation data",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          }
+        }
+      }
+    },
+    "/reservation/{reservationId}": {
+      "get": {
+        "tags": [
+          "reservation"
+        ],
+        "summary": "Get reservation details",
+        "description": "Get reservation details for the given reservation ID.",
+        "operationId": "getReservation",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "reservationId",
+            "in": "path",
+            "description": "ID of reservation requested",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          },
+          "404": {
+            "description": "Invalid reservation ID",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "reservation"
+        ],
+        "summary": "Updates a reservation",
+        "description": "Updates the reservation with the given data.",
+        "operationId": "updateReservation",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "reservationId",
+            "in": "path",
+            "description": "ID of reservation that needs to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Reservation details",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Reservation"
+            }
+          },
+          "400": {
+            "description": "Invalid reservation data",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          },
+          "404": {
+            "description": "Invalid reservation ID",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "reservation"
+        ],
+        "summary": "Cancels a reservation",
+        "description": "Cancels a reservation with the given ID",
+        "operationId": "deleteReservation",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "reservationId",
+            "in": "path",
+            "description": "ID of reservation that needs to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Invalid reservation ID",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Date": {
+      "type": "string",
+      "format": "date"
+    },
+    "DateRange": {
+      "type": "object",
+      "properties": {
+        "sinceDate": {
+          "$ref": "#/definitions/Date"
+        },
+        "untilDate": {
+          "$ref": "#/definitions/Date"
+        }
+      }
+    },
+    "AvailableDates": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Date"
+          }
+        }
+      }
+    },
+    "Reservation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "sinceDate": {
+          "$ref": "#/definitions/Date"
+        },
+        "untilDate": {
+          "$ref": "#/definitions/Date"
+        },
+        "fullname": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "ApiError": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
